@@ -2,7 +2,7 @@
 
 **A real, internet-sourced ransomware breach — detected, hunted, scoped, and recovered.**
 
-Full-lifecycle incident investigation from the LOG(N) Pacific Cyber Range
+Full-lifecycle incident investigation from the LOG(N) Pacific [Cyber Range](https://www.skool.com/cyber-range)
 (*SecOps 6: Live Breach & Incident Response*): an intentionally vulnerable Windows + MySQL
 VM in Azure, instrumented into Microsoft Sentinel, deliberately exposed to the internet, and
 then worked as the **real** breach automated ransom bots carried out — within ~1.5 hours of
@@ -230,6 +230,14 @@ local **VMware** Windows box to follow the lifecycle through — account cleanup
 - URLs in the IOCs are **defanged** (`hxxps`, `is[.]gd`); the ransom note is a recovered artifact.
 - Attacker IPs are **observed indicators** from the logs, published for defensive/reference use only.
 - No offensive tooling is included — this repo is detection, analysis, and response.
+
+---
+
+## 🙏 Credits
+
+The lab environment and scenario were designed by the **[Cyber Range](https://www.skool.com/cyber-range)**
+community (LOG(N) Pacific / Josh Madakor). This repository is my own work: building the honeypot,
+hunting the breach, analyzing the telemetry, and writing the reports.
 
 ---
 
