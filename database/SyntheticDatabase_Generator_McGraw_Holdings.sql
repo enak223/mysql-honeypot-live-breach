@@ -44,7 +44,7 @@
 --
 --   #  | What                     | Current value             | Where
 --   ---+--------------------------+---------------------------+-------------------------
---   1  | Database name            | mcgrawhill_holdings_corp  | section 1
+--   1  | Database name            | mcgraw_hill_holdings_corp  | section 1
 --   2  | Company tag (uppercase)  | MCGRAW                    | headers, section 4
 --   3  | Email domain (lowercase) | mcgraw.holdings.com       | section 5
 --   4  | Reference prefix         | MCG-                      | section 5
@@ -81,11 +81,11 @@
 
 DROP DATABASE IF EXISTS recover_your_data;
 
-CREATE DATABASE mcgrawhill_holdings_corp
+CREATE DATABASE mcgraw_hill_holdings_corp
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
 
-USE mcgrawhill_holdings_corp;
+USE mcgraw_hill_holdings_corp;
 
 
 -- ============================================================
