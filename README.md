@@ -164,9 +164,14 @@ mysql-honeypot-live-breach/
 2. Load synthetic data with [`database/SyntheticDatabase_Generator_v1.0.sql`](database/SyntheticDatabase_Generator_v1.0.sql).
 3. Wire `MySQLAudit_CL` and Defender for Endpoint telemetry into a Log Analytics workspace.
 4. Author Sentinel analytics rules **while the box is clean**.
-5. Weaken and expose: firewall off, NSG allow-all, `root@'%'` reachable on 3306 — and record the
+5. **Capture a pre-breach MDE investigation package** as your clean baseline — just before
+   exposure (this is the before-snapshot the host-compromise diff relies on).
+6. Weaken and expose: firewall off, NSG allow-all, `root@'%'` reachable on 3306 — and record the
    exact exposure timestamp.
-6. Wait for the real breach, then detect → analyze → contain → eradicate → recover.
+7. Wait for the real breach, then detect → analyze → **contain** (isolate the VM in Defender).
+8. **Capture a post-breach MDE investigation package** and diff it against the baseline to confirm
+   whether the host was touched (see [`reports/dfir-package-comparison.md`](reports/dfir-package-comparison.md)).
+9. **Eradicate and recover** — harden MySQL/host, then restore from the off-host backup.
 
 ---
 
