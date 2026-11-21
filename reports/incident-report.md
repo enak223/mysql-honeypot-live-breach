@@ -7,7 +7,7 @@ High.** An internet-exposed MySQL root account on the VM corp-aafbc-6962
 was used to read, then destroy, the mcgraw_hill_holdings_corp database
 and leave a Bitcoin ransom note. The Windows host was not compromised.
 
-## 1. Executive Summary
+## 1. 📌 Executive Summary
 
 On Nov 16, 2026, roughly 1.5 hours after the lab VM corp-aafbc-6962 was
 deliberately exposed to the internet, an automated attacker logged in to
@@ -21,7 +21,7 @@ administrator account was separately brute-forced but never cracked —
 the OS itself was not compromised. All affected data was synthetic lab
 data; the incident is contained.
 
-## 2. Incident Details
+## 2. 🧾 Incident Details
 
 | Field                 | Value                                                                            |
 |-----------------------|----------------------------------------------------------------------------------|
@@ -37,7 +37,7 @@ data; the incident is contained.
 Times below are Eastern (EST) as the Defender portal displays them; raw
 log timestamps are UTC.
 
-## 3. Impact Assessment
+## 3. 💥 Impact Assessment
 
 - **Confidentiality — possible breach.** The attacker ran SELECT *
   against all seven tables (customers, credentials, orders, payments,
@@ -64,7 +64,7 @@ log timestamps are UTC.
   database restore from backup. In a production analogue, this would be
   a full customer-database loss with potential PII/PCI exposure.
 
-## 4. Indicators of Compromise
+## 4. 🧬 Indicators of Compromise
 
 All IOCs below are taken from this incident's logs (the example IOCs in
 the task prompt did not match this environment and are not used).
@@ -82,7 +82,7 @@ the task prompt did not match this environment and are not used).
 | IP          | 194.180.49.140                                              | Windows administrator RDP/SMB brute force — **all failed**               |
 | DB artifact | Database RECOVER_YOUR_DATA, table RECOVER_YOUR_DATA         | Ransom note container                                                    |
 
-## 5. Timeline
+## 5. ⏱️ Timeline
 
 Times in EST. Source table cited per row.
 
@@ -107,7 +107,7 @@ Times in EST. Source table cited per row.
 Hunt used to build the destruction timeline: see the hunt queries in [`queries/`](../queries) (02–destruction / 03–ransom notes).
 
 
-## 6. Root Cause / Attack Vector
+## 6. ⛓️ Root Cause / Attack Vector
 
 **Root cause:** the MySQL service was reachable from the public internet
 (port 3306) with a weak, network-enabled root@'%' account — the
@@ -129,7 +129,7 @@ contents were exfiltrated off-host (no confirmed outbound destination);
 whether the Nov 19 Bastion connectivity failure is related to this
 incident.
 
-## 7. Response Actions
+## 7. ♻️ Response Actions
 
 **Containment (taken):**
 
@@ -163,7 +163,7 @@ incident.
 by the attacker itself during anti-forensics; still verify no residual
 root@'%' account or RECOVER_YOUR_DATA database remains after recovery.
 
-## 8. Evidence
+## 8. 📂 Evidence
 
 **Artifacts referenced:**
 
@@ -183,7 +183,7 @@ root@'%' account or RECOVER_YOUR_DATA database remains after recovery.
 
 ![Successful MySQL logins by account and source IP](media/image2.png)
 
-## 9. Lessons Learned & Recommendations
+## 9. 🗺️ Lessons Learned & Recommendations
 
 Prioritized, highest-impact first:
 
