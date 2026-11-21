@@ -1,6 +1,6 @@
 -- ============================================================
--- ZITELY HOLDINGS CORP
--- VERSION: 1.0
+-- MCGRAW HOLDINGS CORP
+-- VERSION: 2.0
 -- Synthetic Corporate Database Generator
 -- MySQL 8.0 / 8.4
 -- ============================================================
@@ -36,23 +36,61 @@
 --   8. USD-only currency enforcement.
 -- ============================================================
 
+-- ============================================================
+-- RENAMING THIS SCRIPT FOR YOUR OWN COMPANY
+-- ============================================================
+-- The company name appears in 4 forms. The table below always
+-- shows the CURRENT values, because Replace All updates it too.
+--
+--   #  | What                     | Current value             | Where
+--   ---+--------------------------+---------------------------+-------------------------
+--   1  | Database name            | mcgrawhill_holdings_corp  | section 1
+--   2  | Company tag (uppercase)  | MCGRAW                    | headers, section 4
+--   3  | Email domain (lowercase) | mcgraw.holdings.com       | section 5
+--   4  | Reference prefix         | MCG-                      | section 5
+--
+-- STEPS (Notepad++, VS Code or MySQL Workbench: Ctrl+H)
+--   1. Turn ON "Match case". Order matters: value #1 contains
+--      value #3's company name, so replace #1 first.
+--   2. Replace value #1 with your database name.
+--      Lowercase, letters/digits/underscores only.
+--      Example: acme_holdings_corp
+--   3. Replace value #2 with your company tag in UPPERCASE.
+--      Example: ACME
+--   4. Replace value #3 with your email domain in lowercase.
+--      Example: acme.holdings.com
+--   5. Replace value #4 with a 3-letter prefix plus a dash.
+--      Example: ACM-
+--   6. Verify: turn OFF "Match case" and search for the old
+--      company name. It should return 0 results.
+--
+-- AFTER RENAMING
+--   * Update any KQL / SIEM queries that filter on the old
+--     database name (e.g. SCHEMA_NAME or TABLE_SCHEMA).
+--   * Running the script DROPS and recreates the database.
+--     Never run it against a server holding data you need.
+--   * Data is random on every run (2,223 customers by default,
+--     see section 6). It does not restore a previous backup.
+-- ============================================================
+
+
 
 -- ============================================================
 -- 1. DATABASE INITIALIZATION
 -- ============================================================
 
-DROP DATABASE IF EXISTS zitely_holdings_corp;
+DROP DATABASE IF EXISTS recover_your_data;
 
-CREATE DATABASE zitely_holdings_corp
+CREATE DATABASE mcgrawhill_holdings_corp
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
 
-USE zitely_holdings_corp;
+USE mcgrawhill_holdings_corp;
 
 
 -- ============================================================
 -- 2. DATABASE SCHEMA
--- ZITELY v1.0 | CORE TABLES
+-- MCGRAW v1.0 | CORE TABLES
 -- ============================================================
 
 
@@ -318,7 +356,7 @@ CREATE TABLE activity_logs (
 
 -- ============================================================
 -- 3. HELPER FUNCTIONS
--- ZITELY v1.0 | RANDOM DATA GENERATION
+-- MCGRAW v1.0 | RANDOM DATA GENERATION
 -- ============================================================
 
 DELIMITER //
@@ -393,7 +431,7 @@ DELIMITER ;
 
 -- ============================================================
 -- 4. FINANCIAL AUTOMATION TRIGGERS
--- ZITELY v1.0 | PAYMENT AND REFUND LIFECYCLE
+-- MCGRAW v1.0 | PAYMENT AND REFUND LIFECYCLE
 -- ============================================================
 
 DELIMITER //
@@ -418,7 +456,7 @@ BEGIN
     SELECT
         o.customer_id,
         'payment_attempt_created',
-        'ZITELY Payment Simulator',
+        'MCGRAW Payment Simulator',
 
         JSON_OBJECT(
             'payment_id', NEW.payment_id,
@@ -457,7 +495,7 @@ BEGIN
         SELECT
             o.customer_id,
             'payment_status_changed',
-            'ZITELY Payment Simulator',
+            'MCGRAW Payment Simulator',
 
             JSON_OBJECT(
                 'payment_id', NEW.payment_id,
@@ -686,7 +724,7 @@ BEGIN
     SELECT
         o.customer_id,
         'refund_created',
-        'ZITELY Payment Simulator',
+        'MCGRAW Payment Simulator',
 
         JSON_OBJECT(
             'refund_id', NEW.refund_id,
@@ -763,7 +801,7 @@ BEGIN
     SELECT
         o.customer_id,
         'refund_status_changed',
-        'ZITELY Payment Simulator',
+        'MCGRAW Payment Simulator',
 
         JSON_OBJECT(
             'refund_id', NEW.refund_id,
@@ -825,7 +863,7 @@ DELIMITER ;
 
 -- ============================================================
 -- 5. DATA GENERATOR PROCEDURE
--- ZITELY v1.0 | SYNTHETIC DATA GENERATION
+-- MCGRAW v1.0 | SYNTHETIC DATA GENERATION
 -- ============================================================
 
 DELIMITER //
@@ -931,7 +969,7 @@ BEGIN
                 ln,
                 '.',
                 i + 1,
-                '@zitely.holdings.com'
+                '@mcgraw.holdings.com'
             )
         );
 
@@ -1110,7 +1148,7 @@ BEGIN
                     attempt_no,
 
                     CONCAT(
-                        'ZTL-TXN-',
+                        'MCG-TXN-',
                         REPLACE(UUID(), '-', '')
                     ),
 
@@ -1188,7 +1226,7 @@ BEGIN
                             new_payment,
 
                             CONCAT(
-                                'ZTL-REF-',
+                                'MCG-REF-',
                                 REPLACE(UUID(), '-', '')
                             ),
 
@@ -1242,7 +1280,7 @@ BEGIN
                             new_payment,
 
                             CONCAT(
-                                'ZTL-REF-',
+                                'MCG-REF-',
                                 REPLACE(UUID(), '-', '')
                             ),
 
@@ -1297,7 +1335,7 @@ BEGIN
                                     new_payment,
 
                                     CONCAT(
-                                        'ZTL-REF-',
+                                        'MCG-REF-',
                                         REPLACE(UUID(), '-', '')
                                     ),
 
@@ -1619,7 +1657,7 @@ DELIMITER ;
 
 -- ============================================================
 -- 6. EXECUTE DATA GENERATOR
--- ZITELY v1.0 | 2,223 SYNTHETIC CUSTOMERS
+-- MCGRAW v1.0 | 2,223 SYNTHETIC CUSTOMERS
 -- ============================================================
 
 CALL seed_data(2223);
@@ -1627,7 +1665,7 @@ CALL seed_data(2223);
 
 -- ============================================================
 -- 7. HONEYTOKEN ACCOUNTS
--- ZITELY v1.0 | CREDENTIAL MONITORING
+-- MCGRAW v1.0 | CREDENTIAL MONITORING
 -- ============================================================
 
 INSERT INTO credentials (
@@ -1733,7 +1771,7 @@ WHERE customer_id = 3;
 
 -- ============================================================
 -- 8. DATABASE VERIFICATION
--- ZITELY v1.0 | TABLE COUNTS
+-- MCGRAW v1.0 | TABLE COUNTS
 -- ============================================================
 
 SELECT
@@ -1768,7 +1806,7 @@ SELECT 'activity_logs', COUNT(*) FROM activity_logs;
 
 -- ============================================================
 -- 9. PAYMENT LIFECYCLE VERIFICATION
--- ZITELY v1.0 | PAYMENT STATUS DISTRIBUTION
+-- MCGRAW v1.0 | PAYMENT STATUS DISTRIBUTION
 -- ============================================================
 
 SELECT
@@ -1782,7 +1820,7 @@ ORDER BY total_payments DESC;
 
 -- ============================================================
 -- 10. REFUND VERIFICATION
--- ZITELY v1.0 | REFUND STATUS DISTRIBUTION
+-- MCGRAW v1.0 | REFUND STATUS DISTRIBUTION
 -- ============================================================
 
 SELECT
@@ -1795,7 +1833,7 @@ GROUP BY refund_status;
 
 -- ============================================================
 -- 11. REFUND INTEGRITY VALIDATION
--- ZITELY v1.0 | REFUNDS MUST NOT EXCEED PAYMENTS
+-- MCGRAW v1.0 | REFUNDS MUST NOT EXCEED PAYMENTS
 -- ============================================================
 
 SELECT
@@ -1832,7 +1870,7 @@ HAVING total_refunded > p.payment_amount;
 
 -- ============================================================
 -- 12. PAYMENT ATTEMPT ANALYSIS
--- ZITELY v1.0 | MULTIPLE ATTEMPTS
+-- MCGRAW v1.0 | MULTIPLE ATTEMPTS
 -- ============================================================
 
 SELECT
@@ -1854,7 +1892,7 @@ ORDER BY payment_attempts DESC;
 
 -- ============================================================
 -- 13. CURRENCY VALIDATION
--- ZITELY v1.0 | USD ONLY
+-- MCGRAW v1.0 | USD ONLY
 -- ============================================================
 
 SELECT
@@ -1897,7 +1935,7 @@ WHERE currency <> 'USD';
 
 -- ============================================================
 -- 14. FINANCIAL AUDIT LOG INSPECTION
--- ZITELY v1.0 | FINANCIAL EVENTS
+-- MCGRAW v1.0 | FINANCIAL EVENTS
 -- ============================================================
 
 SELECT
@@ -1923,7 +1961,7 @@ LIMIT 50;
 
 -- ============================================================
 -- 15. QUICK DATA INSPECTION
--- ZITELY v1.0 | CUSTOMERS
+-- MCGRAW v1.0 | CUSTOMERS
 -- ============================================================
 
 SELECT *
@@ -1934,7 +1972,7 @@ LIMIT 10;
 
 -- ============================================================
 -- 16. AUTHENTICATION EVENT INSPECTION
--- ZITELY v1.0 | ACTIVITY LOGS
+-- MCGRAW v1.0 | ACTIVITY LOGS
 -- ============================================================
 
 SELECT
@@ -1960,7 +1998,7 @@ LIMIT 20;
 
 -- ============================================================
 -- 17. MFA INSPECTION
--- ZITELY v1.0 | ACCOUNTS WITHOUT MFA
+-- MCGRAW v1.0 | ACCOUNTS WITHOUT MFA
 -- ============================================================
 
 SELECT
@@ -1976,7 +2014,7 @@ WHERE mfa_enabled = 0;
 
 -- ============================================================
 -- 18. FAILED LOGIN INSPECTION
--- ZITELY v1.0 | AUTHENTICATION MONITORING
+-- MCGRAW v1.0 | AUTHENTICATION MONITORING
 -- ============================================================
 
 SELECT
@@ -1994,7 +2032,7 @@ ORDER BY failed_logins DESC;
 
 -- ============================================================
 -- 19. HONEYTOKEN INSPECTION
--- ZITELY v1.0 | DECEPTION ACCOUNTS
+-- MCGRAW v1.0 | DECEPTION ACCOUNTS
 -- ============================================================
 
 SELECT
@@ -2014,7 +2052,7 @@ WHERE username IN (
 
 -- ============================================================
 -- 20. STATE VALIDATION
--- ZITELY v1.0 | STATE ABBREVIATIONS
+-- MCGRAW v1.0 | STATE ABBREVIATIONS
 -- ============================================================
 
 SELECT
@@ -2036,7 +2074,7 @@ ORDER BY state;
 
 -- ============================================================
 -- 21. PAYMENT AND ORDER RECONCILIATION
--- ZITELY v1.0 | FINANCIAL ANALYSIS
+-- MCGRAW v1.0 | FINANCIAL ANALYSIS
 -- ============================================================
 
 SELECT
@@ -2086,6 +2124,6 @@ LIMIT 50;
 
 
 -- ============================================================
--- END OF ZITELY HOLDINGS CORP
+-- END OF MCGRAW HOLDINGS CORP
 -- VERSION 1.0
 -- ============================================================

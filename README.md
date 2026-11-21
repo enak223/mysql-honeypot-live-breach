@@ -146,7 +146,7 @@ mysql-honeypot-live-breach/
 │   └── media/                             # hunt-output screenshots
 ├── queries/                               # documented KQL hunts (01–05)
 ├── database/
-│   └── SyntheticDatabase_Generator_v1.0.sql
+│   └── SyntheticDatabase_Generator_McGraw_Holdings.sql
 ├── iocs/
 │   ├── iocs.md                            # indicators of compromise
 │   └── ransom-note.txt                    # recovered ransom note
@@ -161,7 +161,7 @@ mysql-honeypot-live-breach/
 ## ⚙️ Reproduce the Lab
 
 1. Deploy a Windows 11 VM in Azure; install MySQL 8.0 and enable the audit log plugin.
-2. Load synthetic data with [`database/SyntheticDatabase_Generator_v1.0.sql`](database/SyntheticDatabase_Generator_v1.0.sql).
+2. Load synthetic data with [`database/SyntheticDatabase_Generator_McGraw_Holdings.sql`](database/SyntheticDatabase_Generator_McGraw_Holdings.sql).
 3. Wire `MySQLAudit_CL` and Defender for Endpoint telemetry into a Log Analytics workspace.
 4. Author Sentinel analytics rules **while the box is clean**.
 5. **Capture a pre-breach MDE investigation package** as your clean baseline — just before
@@ -211,7 +211,7 @@ The target database is a fake corporation I generated myself — and rebuilt wit
 understand it end to end: 2,223 customers across customers / orders / payments / refunds /
 credentials / devices / activity_logs, with financial-lifecycle triggers, refund validation, and
 planted **honeytoken** accounts (`admin`, `dbadmin`, `backup_svc`). See
-[`database/SyntheticDatabase_Generator_v1.0.sql`](database/SyntheticDatabase_Generator_v1.0.sql).
+[`database/SyntheticDatabase_Generator_McGraw_Holdings.sql`](database/SyntheticDatabase_Generator_McGraw_Holdings.sql).
 Understanding the schema is what made it obvious which tables an attacker would read first.
 
 ---
