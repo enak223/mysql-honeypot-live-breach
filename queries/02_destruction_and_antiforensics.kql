@@ -1,0 +1,10 @@
+// Destructive and anti-forensics MySQL statements on the target VM, oldest first.
+// Reconstructs the kill chain: GRANT self-escalation -> DROP -> RESET MASTER / PURGE -> SHUTDOWN.
+// MyTag: last 4 of the VM name.
+let MyTag = "6962";
+MySQLAudit_CL
+| where _ResourceId contains MyTag
+| extend RawData = replace_string(RawData, "\t", " ")
+| where RawData has_any ("DROP DATABASE","DROP TABLE","RESET MASTER","PURGE BINARY","SHUTDOWN","GRANT","RECOVER_YOUR_DATA")
+| project TimeGenerated, RawData
+| order by TimeGenerated asc

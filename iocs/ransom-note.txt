@@ -1,0 +1,25 @@
+Recovered from: database RECOVER_YOUR_DATA, table RECOVER_YOUR_DATA (corp-aafbc-6962).
+The field values below (wallet, contact, DATAID, amount, link) are verbatim IOCs from
+the incident; the surrounding wording follows the standard automated "RECOVER_YOUR_DATA"
+MySQL ransom template. All data in this environment is synthetic.
+
+------------------------------------------------------------------------------
+
+All your databases were downloaded and deleted.
+
+To recover your data you must pay 0.0131 BTC to the following address:
+
+    bc1qgny880a3eew0yk29z58ptw33l6x367alq3fppx
+
+After payment, email us with your DATAID to confirm the transaction and
+receive your data back:
+
+    Email:   ak+2mfso@onionmail.org
+    DATAID:  2MFSO
+
+More information:
+
+    hxxps://is[.]gd/mysql43
+
+If payment is not received within 48 hours your data will be leaked or
+permanently lost.

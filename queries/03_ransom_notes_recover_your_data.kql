@@ -1,0 +1,14 @@
+// Statements touching RECOVER_YOUR_DATA (the ransom database/table/note), oldest first.
+// Isolates the first note creation and every re-plant by later bots.
+// MyTag: last 4 of the VM name.
+let MyTag = "6962";
+// Exposed: Phase 5 exposure timestamp.
+let Exposed = todatetime("2026-11-17T00:42:36.0860906Z");
+MySQLAudit_CL
+| where TimeGenerated > Exposed and _ResourceId contains MyTag
+| extend RawData = replace_string(RawData, "\t", " ")
+| where RawData has "Query"
+| where RawData contains "recover"   // RECOVER_YOUR_DATA create/use/insert/drop
+| extend Query = tostring(split(RawData, "Query")[1])
+| project TimeGenerated, Query, RawData
+| order by TimeGenerated asc

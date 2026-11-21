@@ -1,0 +1,11 @@
+// Host-compromise check: non-system processes on the target host after exposure.
+// Expect only the analyst's own session plus normal OS/Defender activity (no attacker binaries).
+// Dev: Windows device name.
+let Dev = "corp-aafbc-6962";
+// Exposed: Phase 5 exposure timestamp.
+let Exposed = todatetime("2026-11-17T00:42:36.0860906Z");
+DeviceProcessEvents
+| where TimeGenerated > Exposed and DeviceName startswith Dev
+| where AccountName !in ("system","local service","network service")
+| project TimeGenerated, AccountName, FileName, ProcessCommandLine, InitiatingProcessFileName
+| order by TimeGenerated desc

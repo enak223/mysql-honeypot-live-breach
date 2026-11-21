@@ -1,0 +1,9 @@
+// Windows logon attempts against administrator/guest on the target host.
+// Confirms the OS-level brute force and that it never succeeded (all failures).
+// Dev: Windows device name.
+let Dev = "corp-aafbc-6962";
+DeviceLogonEvents
+| where DeviceName startswith Dev
+| where AccountName in~ ("administrator","guest")
+| summarize Attempts=count() by AccountName, ActionType, RemoteIP
+| order by Attempts desc

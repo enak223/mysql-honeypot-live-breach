@@ -1,0 +1,15 @@
+// Successful non-localhost MySQL logins by account and source IP, after exposure.
+// Surfaces the attacker root logins (and any other external logins) with first/last seen.
+// MyTag: last 4 of the VM name — Azure stores _ResourceId lowercase, so match with `contains`.
+let MyTag = "6962";
+// Exposed: Phase 5 exposure timestamp — ignore anything before the box went live.
+let Exposed = todatetime("2026-11-17T00:42:36.0860906Z");
+MySQLAudit_CL
+| where TimeGenerated > Exposed and _ResourceId contains MyTag
+| extend RawData = replace_string(RawData, "\t", " ")
+| where RawData has "Connect" and RawData !has "Access denied"
+| extend User = replace_string(tostring(split(tostring(split(RawData,"@")[0])," ")[-1]),"'","")
+| extend IP   = replace_string(tostring(split(split(RawData,"@")[1]," ")[0]),"'","")
+| where isnotempty(IP) and IP != "localhost"
+| summarize Logons=count(), First=min(TimeGenerated), Last=max(TimeGenerated) by User, IP
+| order by First asc

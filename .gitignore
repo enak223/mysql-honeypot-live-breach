@@ -1,0 +1,12 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Local data not meant for the repo
+*.bak
+*.dump
+*.sql.gz
+raw-logs/
+packages/
